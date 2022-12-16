@@ -71,24 +71,11 @@ app.get('/search', (req, res) => {
         restaurant.category.includes(keyword)
       })
 
-      if (restaurants.length === 0) {
-        return res.render('wrong', { keywords })
-      }
-
+      
       res.render('index', { restaurants , keywords })
      })
     .catch(error => console.log(error))
 
-  // const restaurants = Restaurant.find().filter((restaurant) => {
-  //   return restaurant.name.toLowerCase().includes(keyword) || 
-  //     restaurant.name_en.toLowerCase().includes(keyword) ||
-  //     restaurant.category.includes(keyword)
-  // })
-  // if (restaurants.length === 0) {
-  //   return res.render('wrong', { keywords })
-  // }
-
-  // res.render('index', { Restaurant: restaurants , keywords })
 })
 
 
