@@ -1,13 +1,33 @@
 // require packages used in the project
 const express = require('express')
+const mongoose = require('mongoose')
+const exphbs = require('express-handlebars')
+const Restaurant = require('./models/restaurant')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const app = express()
 const port = 3000
 
-//require express-handlebars
-const exphbs = require('express-handlebars')
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+const db = mongoose.connection
+
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
+
+
 
 //require restaurant.json
-const restaurantList = require('./restaurant.json').results
+// const restaurantList = require('./restaurant.json').results
 
 //setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
@@ -18,13 +38,19 @@ app.use(express.static('public'))
 
 //routes setting
 app.get('/', (req, res) => {
-  res.render('index', { restaurantList })
+  Restaurant.find()
+      .lean()
+      .then(restaurants => res.render('index', { restaurants }))
+      .catch(error => console.log(error))
 })
 
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-const restaurant = restaurantList.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant })
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
 
@@ -36,17 +62,21 @@ app.get('/search', (req, res) => {
     return res.redirect('/')
   }
 
-  const restaurants = restaurantList.filter((restaurant) => {
+  Restaurant.find().lean()
+  .then(res => {
+    console.log(res)
+  })
+
+  const restaurants = Restaurant.find().filter((restaurant) => {
     return restaurant.name.toLowerCase().includes(keyword) || 
       restaurant.name_en.toLowerCase().includes(keyword) ||
       restaurant.category.includes(keyword)
   })
-
   if (restaurants.length === 0) {
     return res.render('wrong', { keywords })
   }
 
-  res.render('index', { restaurantList: restaurants , keywords })
+  res.render('index', { Restaurant: restaurants , keywords })
 })
 
 
