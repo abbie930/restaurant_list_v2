@@ -62,21 +62,33 @@ app.get('/search', (req, res) => {
     return res.redirect('/')
   }
 
-  Restaurant.find().lean()
-  .then(res => {
-    console.log(res)
-  })
+  Restaurant.find()
+    .lean()
+    .then(resp => {
+      const restaurants = resp.filter((restaurant) => {
+        return restaurant.name.toLowerCase().includes(keyword) || 
+        restaurant.name_en.toLowerCase().includes(keyword) ||
+        restaurant.category.includes(keyword)
+      })
 
-  const restaurants = Restaurant.find().filter((restaurant) => {
-    return restaurant.name.toLowerCase().includes(keyword) || 
-      restaurant.name_en.toLowerCase().includes(keyword) ||
-      restaurant.category.includes(keyword)
-  })
-  if (restaurants.length === 0) {
-    return res.render('wrong', { keywords })
-  }
+      if (restaurants.length === 0) {
+        return res.render('wrong', { keywords })
+      }
 
-  res.render('index', { Restaurant: restaurants , keywords })
+      res.render('index', { restaurants , keywords })
+     })
+    .catch(error => console.log(error))
+
+  // const restaurants = Restaurant.find().filter((restaurant) => {
+  //   return restaurant.name.toLowerCase().includes(keyword) || 
+  //     restaurant.name_en.toLowerCase().includes(keyword) ||
+  //     restaurant.category.includes(keyword)
+  // })
+  // if (restaurants.length === 0) {
+  //   return res.render('wrong', { keywords })
+  // }
+
+  // res.render('index', { Restaurant: restaurants , keywords })
 })
 
 
