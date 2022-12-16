@@ -71,13 +71,12 @@ app.get('/search', (req, res) => {
         restaurant.category.includes(keyword)
       })
 
-      
+
       res.render('index', { restaurants , keywords })
      })
     .catch(error => console.log(error))
 
 })
-
 
 app.listen(port, () => {
   console.log(`Express is listening on http://localhost:${port}`)
