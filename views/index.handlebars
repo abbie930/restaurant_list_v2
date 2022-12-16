@@ -22,8 +22,8 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
         {{!-- use 'each' display restaurant list --}}
-        {{#each restaurantList}}
-        <a href="/restaurants/{{this.id}}" class="text-secondary">
+        {{#each restaurants}}
+        <a href="/restaurants/{{this._id}}" class="text-secondary">
           <div class="card mb-3">
             <img class="card-img-top" src="{{this.image}}"
               alt="{{this.name}}">
