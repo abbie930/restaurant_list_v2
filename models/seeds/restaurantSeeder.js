@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const Restaurant = require('../restaurant')
+const restaurantList = require('./restaurant.json').results
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const restaurantList = require('./restaurant.json').results
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection

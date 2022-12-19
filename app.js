@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 const Restaurant = require('./models/restaurant')
 
 if (process.env.NODE_ENV !== 'production') {
@@ -25,16 +26,15 @@ db.once('open', () => {
 })
 
 
-
-//require restaurant.json
-// const restaurantList = require('./restaurant.json').results
-
 //setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
 //setting static files
 app.use(express.static('public'))
+//setting body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 //routes setting
 app.get('/', (req, res) => {
@@ -44,7 +44,13 @@ app.get('/', (req, res) => {
       .catch(error => console.log(error))
 })
 
+//新增餐廳頁面
+app.get('/restaurants/new', (req, res) => {
+  return res.render('new')
+  return res.json({"hi ": "there"})
+})
 
+//瀏覽餐廳特定頁面
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -53,7 +59,14 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//新增餐廳
+app.post('/restaurants', (req, res) => {
+  return Restaurant.create(req.body)
+     .then(() => res.redirect('/'))
+     .catch(error => console.log(error))
+})
 
+//搜尋餐廳
 app.get('/search', (req, res) => {
   const keywords = req.query.keyword
   const keyword = req.query.keyword.trim().toLowerCase()
