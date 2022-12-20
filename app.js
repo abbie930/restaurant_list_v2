@@ -47,7 +47,6 @@ app.get('/', (req, res) => {
 //新增餐廳頁面
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')
-  return res.json({"hi ": "there"})
 })
 
 //瀏覽餐廳特定頁面
@@ -110,8 +109,8 @@ app.get('/search', (req, res) => {
 
   Restaurant.find()
     .lean()
-    .then(resp => {
-      const restaurants = resp.filter((restaurant) => {
+    .then(restaurantData => {
+      const restaurants = restaurantData.filter((restaurant) => {
         return restaurant.name.toLowerCase().includes(keyword) || 
         restaurant.name_en.toLowerCase().includes(keyword) ||
         restaurant.category.includes(keyword)
