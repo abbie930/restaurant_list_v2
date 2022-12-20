@@ -1,0 +1,63 @@
+<h1 class="mb-1 restaurant-show-title">編輯餐廳</h1>
+<div class="container">
+  <form action="/restaurants/{{ restaurant._id }}/edit" method="POST">
+    <div class="mb-3">
+      <label for="name">店名<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="name" id="name" placeholder="梅子鰻蒲燒專賣店"
+        aria-label="default input example" value="{{ restaurant.name }}" required>
+      <div class="mb-3">
+        <label for="name_en">英文店名<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" name="name_en" id="name_en" placeholder=""
+          aria-label="default input example" value="{{ restaurant.name_en }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="category">類別<span class="text-danger">*</span></label>
+        <input list="categoryList" type="text" class="form-control" name="category" id="category" placeholder="日本料理"
+          aria-label="default input example" value="{{ restaurant.category }}" required>
+        <datalist id="categoryList">
+          <option>美式</option>
+          <option>酒吧</option>
+          <option>咖啡廳</option>
+          <option>日式料理</option>
+          <option>義式餐廳</option>
+          <option>中東料理</option>
+        </datalist>
+      </div>
+      <div class="mb-3">
+        <label for="location">地址<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" name="location" id="location" placeholder="台北市中山區林森北路 107 巷 8 號"
+          aria-label="default input example" value="{{ restaurant.location }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="phone">電話<span class="text-danger">*</span></label>
+        <input type="tel" class="form-control" name="phone" id="phone" placeholder="02-2521-2813"
+          aria-label="default input example" value="{{ restaurant.phone }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="rating">評分<span class="text-danger">*</span></label>
+        <input type="number" class="form-control" name="rating" id="rating" min="0" max="5" step="0.1" placeholder="4.3"
+          aria-label="default input example" value="{{ restaurant.rating }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="description">描述<span class="text-danger">*</span></label>
+        <textarea class="form-control" name="description" id="description" rows="3" required>{{ restaurant.description }}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="google_map">Google地圖連結<span class="text-danger">*</span></label>
+        <input type="url" class="form-control" name="google_map" id="google_map" value="{{ restaurant.google_map }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="image">圖片連結<span class="text-danger">*</span></label>
+        <input type="url" class="form-control" name="image" id="image" value="{{ restaurant.image }}" required>
+      </div>
+
+      <div class="text-center mb-3">
+        <button type="submit" class="btn btn-secondary">
+          儲存餐廳
+        </button>
+        <a href="/"><button type="button" class="btn btn-outline-secondary">
+            返回首頁
+          </button></a>
+      </div>
+  </form>
+</div>

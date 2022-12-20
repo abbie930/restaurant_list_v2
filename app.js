@@ -66,6 +66,41 @@ app.post('/restaurants', (req, res) => {
      .catch(error => console.log(error))
 })
 
+//編輯餐廳頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+//編輯餐廳資料
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+     .then(restaurant => {
+      for (let key in req.body) {
+        restaurant[key] = req.body[key]
+      }
+      return restaurant.save()
+     })
+     .then(() => res.redirect(`/restaurants/${id}`))
+     .catch(error => console.log(error))
+})
+
+// //方法二
+// app.put('/restaurants/:id', (req, res) => {
+//   //destructuring assignment
+//   console.log(req.params)
+//   console.log(req.body)
+//   const{ id } = req.params
+//   Restaurant.findByIdAndUpdate(id ,req.body)
+//       .then(() => res.redirect(`/restaurants/${id}`))
+//       .catch(error => console.log(error))
+// })
+
+
 //搜尋餐廳
 app.get('/search', (req, res) => {
   const keywords = req.query.keyword

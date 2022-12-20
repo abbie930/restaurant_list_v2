@@ -4,17 +4,13 @@
   <div class="mb-3">
     <label for="name">店名<span class="text-danger">*</span></label>
     <input type="text" class="form-control" name="name" id="name" placeholder="梅子鰻蒲燒專賣店" aria-label="default input example" required>
-    {{!-- <div class="invalid-feedback">
-      Please enter the content.
-    </div> --}}
-  </div>
   <div class="mb-3">
     <label for="name_en">英文店名<span class="text-danger">*</span></label>
     <input type="text" class="form-control" name="name_en" id="name_en" placeholder="" aria-label="default input example" required>
   </div>
   <div class="mb-3">
     <label for="category">類別<span class="text-danger">*</span></label>
-    <input list="categoryList" type="text" class="form-control" name="category" id="category" placeholder="日本料理" aria-label="default input example" required>
+    <input list="categoryList" type="text" class="form-control" name="category" id="category" placeholder="日式料理" aria-label="default input example" required>
       <datalist id="categoryList">
         <option>美式</option>
         <option>酒吧</option>
@@ -53,19 +49,9 @@
     <button type="submit" class="btn btn-secondary">
       新增餐廳
     </button>
-    <button type="button" class="btn btn-outline-secondary">
+    <a href="/"><button type="button" class="btn btn-outline-secondary">
       返回首頁
-    </button>
+    </button></a>
   </div>
 </form>
 </div>
-
-
-
-    {{!-- 
-  
-      {{! 使用type="reset" 可以清除/還原輸入 }}
-      <button type="reset" class="btn btn-outline-danger">重新輸入</button>
-    </div>
-  </form>
-</div> --}}
