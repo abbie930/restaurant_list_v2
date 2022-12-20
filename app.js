@@ -89,16 +89,14 @@ app.post('/restaurants/:id/edit', (req, res) => {
      .catch(error => console.log(error))
 })
 
-// //方法二
-// app.put('/restaurants/:id', (req, res) => {
-//   //destructuring assignment
-//   console.log(req.params)
-//   console.log(req.body)
-//   const{ id } = req.params
-//   Restaurant.findByIdAndUpdate(id ,req.body)
-//       .then(() => res.redirect(`/restaurants/${id}`))
-//       .catch(error => console.log(error))
-// })
+//刪除餐廳
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+     .then(restaurant => restaurant.remove())
+     .then(() => res.redirect('/'))
+     .catch(error => console.log(error))
+})
 
 
 //搜尋餐廳
